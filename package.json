@@ -1,0 +1,30 @@
+{
+  "name": "movies-api",
+  "version": "1.0.0",
+  "description": "A simple movie api with authentication",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docs": "./node_modules/.bin/apidoc -i ./api/routes -o ./docs/"
+  },
+  "author": {
+    "name": "Maurício Costa",
+    "email": "mauriciocosta.cm@gmail.com",
+    "url": "https://github.com/costamauricio"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "import-dir": "0.0.1",
+    "koa": "^2.3.0",
+    "koa-logger": "^3.0.1",
+    "koa-mount": "^3.0.0",
+    "koa-router": "^7.2.1",
+    "koa-static": "^3.0.0",
+    "mysql": "^2.13.0"
+  },
+  "devDependencies": {
+    "apidoc": "^0.17.6"
+  }
+}
