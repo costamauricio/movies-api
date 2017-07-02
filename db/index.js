@@ -3,6 +3,7 @@
 const mysql = require('mysql');
 
 module.exports = {
+
   /**
    * Conecta na base de dados
    */
@@ -37,8 +38,12 @@ module.exports = {
 
   /**
    * Executa uma query e retorna o resultado
+   *
+   * @param {string} sql
+   * @param {array} fields
+   * @returns {Promise}
    */
-  query(sql) {
+  query(sql, fields = []) {
 
     return new Promise((resolve, reject) => {
 
@@ -47,7 +52,7 @@ module.exports = {
         if (err)
           reject(err);
 
-        connection.query(sql, (err, result, fields) => {
+        connection.query(sql, fields, (err, result, fields) => {
 
           connection.release();
 

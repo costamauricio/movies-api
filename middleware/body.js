@@ -7,9 +7,15 @@ const asyncBusboy = require('async-busboy');
  */
 module.exports = function() {
   return async (ctx, next) => {
-    const {files, fields} = await asyncBusboy(ctx.req);
-    ctx.request.files = files;
-    ctx.request.fields = fields;
+
+    try {
+      const {files, fields} = await asyncBusboy(ctx.req);
+      ctx.request.files = files;
+      ctx.request.fields = fields;
+    } catch (err) {
+
+    }
+    
     await next();
   };
 };

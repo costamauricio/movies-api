@@ -1,25 +1,28 @@
 'use-strict';
 
 const Router = require('koa-router');
+const auth = require('../auth');
 
 const router = new Router({
   prefix: '/movies'
 });
 
+router.use(auth.authorize());
+
 router.get('/', async (ctx) => {
-  console.log(ctx);
+  ctx.status = 200;
 });
 
 router.get('/:id', async (ctx) => {
-  console.log(ctx);
+  ctx.status = 200;
 });
 
 router.get('/:id/rental', async (ctx) => {
-  console.log(ctx);
+  ctx.status = 200;
 });
 
 router.get('/:id/return', async (ctx) => {
-  console.log(ctx);
+  ctx.status = 200;
 });
 
 module.exports = router;

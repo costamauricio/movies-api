@@ -15,6 +15,14 @@ class User extends Basic {
     return 'users';
   }
 
+  get name() {
+    return this.fields.name;
+  }
+
+  set name(name) {
+    this.fields.name = name;
+  }
+
   get email() {
     return this.fields.email;
   }

@@ -9,6 +9,7 @@ router.post('/users', async (ctx) => {
 
   let user = new User();
 
+  user.name = ctx.request.fields.name,
   user.email = ctx.request.fields.email,
   user.password = ctx.request.fields.password;
 

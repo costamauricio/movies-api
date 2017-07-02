@@ -17,6 +17,10 @@ class BasicModel {
     return this.fields.id;
   }
 
+  set id(id) {
+    this.fields.id = id;
+  }
+
   static table() {
     return '';
   }
@@ -27,19 +31,41 @@ class BasicModel {
 
   /**
    * Retorna um model representando o registro do banco
+   *
+   * @param {integer} id - ID do registro
+   * @param {Object} conditions - Objecto chave: valor
    */
-  static findOne(id = null, conditions = {}) {
+  static findOne(id = null, conditions = null) {
 
     return new Promise((resolve, reject) => {
 
-      let sql = `select * from ${this.table()}`;
+      let sql = `select * from ${this.table()}`,
+          and = '';
 
       if (id)
         sql = `${sql} where id = ${id}`;
 
-      db.query(sql + ' limit 1')
+      if (conditions) {
+        sql = `${sql} where `;
+
+        Object.keys(conditions).forEach((key) => {
+          sql = `${sql}${and}${key} ?`;
+          and = ' and ';
+        });
+      }
+
+      db.query(sql + ' limit 1', (conditions ? Object.values(conditions) : []))
         .then((data) => {
 
+          /**
+           * Caso não encontre nenhum registro
+           */
+          if (!data.length)
+            return resolve(null);
+
+          /**
+           * Cria o model que esta manipulando e popula com os dados
+           */
           let ob = new this();
 
           Object.keys(data[0]).forEach((prop) => {
