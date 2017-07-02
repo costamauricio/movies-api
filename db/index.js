@@ -33,6 +33,58 @@ module.exports = {
       });
 
     });
+  },
+
+  /**
+   * Executa uma query e retorna o resultado
+   */
+  query(sql) {
+
+    return new Promise((resolve, reject) => {
+
+      global.connection.getConnection((err, connection) => {
+
+        if (err)
+          reject(err);
+
+        connection.query(sql, (err, result, fields) => {
+
+          connection.release();
+
+          if (err)
+            reject(err);
+
+          resolve(result);
+        });
+
+      });
+    });
+  },
+
+  /**
+   * Insere um registro em uma tabela
+   */
+  insert(tableName, fields) {
+
+    return new Promise((resolve, reject) => {
+
+      global.connection.getConnection((err, connection) => {
+
+        if (err)
+          reject(err);
+
+        connection.query(`insert into ${tableName} set ?`, fields, (err, result, fields) => {
+
+          connection.release();
+
+          if (err)
+            reject(err);
+
+          resolve(result);
+        });
+
+      });
+    });
   }
 
 }

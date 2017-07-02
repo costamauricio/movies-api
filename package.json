@@ -15,16 +15,21 @@
   },
   "license": "MIT",
   "dependencies": {
+    "async-busboy": "^0.6.1",
     "dotenv": "^4.0.0",
     "import-dir": "0.0.1",
     "koa": "^2.3.0",
+    "koa-compose": "^4.0.0",
     "koa-logger": "^3.0.1",
     "koa-mount": "^3.0.0",
+    "koa-passport": "^3.0.0",
     "koa-router": "^7.2.1",
     "koa-static": "^3.0.0",
-    "mysql": "^2.13.0"
+    "mysql": "^2.13.0",
+    "passport-jwt": "^2.2.1"
   },
   "devDependencies": {
-    "apidoc": "^0.17.6"
+    "apidoc": "^0.17.6",
+    "eslint": "^4.1.1"
   }
 }

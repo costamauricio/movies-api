@@ -23,11 +23,11 @@ const db = require('./db');
 
   } catch(err) {
 
-    console.log('Database connection error.', err);
+    console.error('Database connection error.', err);
     process.exit();
   }
 
   app.listen(config.server.port, () => {
-    console.log(`Server running at http://${config.server.host}:${config.server.port}`)
-  })
+    console.log(`Server running at http://${config.server.host}:${config.server.port}`);
+  });
 })();

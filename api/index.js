@@ -3,8 +3,11 @@
 const Koa = require('koa');
 const Router = require('koa-router');
 const importDir = require('import-dir');
+const auth = require('./auth');
 
 const app = new Koa();
+
+app.use(auth.initialize());
 
 /**
  * Define as rotas padrões da API
