@@ -15,7 +15,7 @@ create table users(
 create table tokens(
   id bigint auto_increment primary key,
   user_id bigint not null,
-  token varchar(255),
+  token varchar(255) not null,
   constraint user_id_tokens_fk foreign key(user_id) references users(id) on delete cascade
 );
 

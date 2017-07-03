@@ -74,9 +74,7 @@ class BasicModel {
 
           resolve(ob);
         })
-        .catch((err) => {
-          reject(err);
-        });
+        .catch(reject);
 
     });
   }
@@ -96,9 +94,29 @@ class BasicModel {
           this.id = result.insertId;
           resolve(this);
         })
-        .catch((err) => {
-          reject(err)
-        });
+        .catch(reject);
+    });
+  }
+
+  /**
+   * Remove o registro
+   */
+  remove() {
+
+    return new Promise((resolve, reject) => {
+
+      if (!this.id)
+        reject();
+
+      let sql = `delete from ${this.constructor.table()} where id = ?`;
+
+      db.query(sql, [this.id])
+        .then((data) => {
+
+          this.id = null;
+          resolve(this);
+        })
+        .catch(reject);
     });
   }
 }
