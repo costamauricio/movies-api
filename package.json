@@ -33,8 +33,10 @@
     "koa-passport": "^3.0.0",
     "koa-router": "^7.2.1",
     "koa-static": "^3.0.0",
+    "merge-descriptors": "^1.0.1",
     "mysql": "^2.13.0",
-    "passport-jwt": "^2.2.1"
+    "passport-jwt": "^2.2.1",
+    "qs": "^6.5.0"
   },
   "devDependencies": {
     "apidoc": "^0.17.6",
