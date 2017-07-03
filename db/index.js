@@ -51,7 +51,6 @@ module.exports = {
 
         if (err)
           reject(err);
-
         connection.query(sql, fields, (err, result, fields) => {
 
           connection.release();
@@ -90,6 +89,41 @@ module.exports = {
 
       });
     });
-  }
+  },
 
+  /**
+   * Atualiza um registro em uma tabela
+   */
+  update(tableName, fields, conditions = {}) {
+
+    return new Promise((resolve, reject) => {
+
+      global.connection.getConnection((err, connection) => {
+
+        if (err)
+          reject(err);
+
+        let sql = `update ${tableName} set `;
+
+        sql = sql + Object.keys(fields).map((field) => {
+          return `${field} = ?`;
+        }).join(', ');
+
+        sql = `${sql} where ` + Object.keys(conditions).map((condition) => {
+          return `${condition} ?`;
+        }).join(' and ');
+
+        connection.query(sql, Object.values(fields).concat(Object.values(conditions)), (err, result, fields) => {
+
+          connection.release();
+
+          if (err)
+            reject(err);
+
+          resolve(result);
+        });
+
+      });
+    });
+  }
 }

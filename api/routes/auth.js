@@ -74,7 +74,7 @@ router.get('/logout', auth.authorize(), async (ctx) => {
     boom.badImplementation(ctx);
   }
 
-  ctx.status = 200;
+  ctx.status = 204;
 });
 
 module.exports = router;

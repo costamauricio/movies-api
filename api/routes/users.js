@@ -40,7 +40,7 @@ router.post('/users', validator({
     boom.badImplementation(ctx);
   }
 
-  ctx.body = "User created.";
+  ctx.status = 204;
 });
 
 module.exports = router;

@@ -12,6 +12,5 @@ const app = new Koa();
 app.use(logger());
 app.use(middleware());
 app.use(mount(api));
-// app.use(koaStatic('./docs'));
 
 module.exports = app;

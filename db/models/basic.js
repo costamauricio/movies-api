@@ -25,8 +25,57 @@ class BasicModel {
     return '';
   }
 
-  static find(fields = {}, conditions = {}, limit = null) {
+  /**
+   * Retorna uma collection representando os registros do banco
+   *
+   * @param {Object} conditions - Objecto chave: valor
+   * @param {integer} limit
+   */
+  static find(conditions = null, limit = null) {
 
+    return new Promise((resolve, reject) => {
+
+      let sql = `select * from ${this.table()}`;
+
+      if (conditions) {
+        sql = `${sql} where ` + Object.keys(conditions).map((key) => {
+          return `${key} ?`;
+        }).join(' and ');
+      }
+
+      if (limit)
+        sql = `${sql} limit ${limit}`;
+
+      db.query(sql, (conditions ? Object.values(conditions) : []))
+        .then((data) => {
+
+          let result = [];
+
+          /**
+           * Caso não encontre nenhum registro
+           */
+          if (!data.length)
+            return resolve(result);
+
+          result = data.map((row) => {
+
+            /**
+            * Cria o model que esta manipulando e popula com os dados
+            */
+            let ob = new this();
+
+            Object.keys(row).forEach((prop) => {
+              ob[prop] = row[prop];
+            });
+
+            return ob;
+          });
+
+          resolve(result);
+        })
+        .catch(reject);
+
+    });
   }
 
   /**
@@ -39,44 +88,19 @@ class BasicModel {
 
     return new Promise((resolve, reject) => {
 
-      let sql = `select * from ${this.table()}`,
-          and = '';
-
       if (id)
-        sql = `${sql} where id = ${id}`;
+        conditions = { 'id = ': id };
 
-      if (conditions) {
-        sql = `${sql} where `;
-
-        Object.keys(conditions).forEach((key) => {
-          sql = `${sql}${and}${key} ?`;
-          and = ' and ';
-        });
-      }
-
-      db.query(sql + ' limit 1', (conditions ? Object.values(conditions) : []))
+      this.find(conditions, 1)
         .then((data) => {
 
-          /**
-           * Caso não encontre nenhum registro
-           */
           if (!data.length)
             return resolve(null);
 
-          /**
-           * Cria o model que esta manipulando e popula com os dados
-           */
-          let ob = new this();
-
-          Object.keys(data[0]).forEach((prop) => {
-            ob[prop] = data[0][prop];
-          });
-
-          resolve(ob);
+          resolve(data[0]);
         })
         .catch(reject);
-
-    });
+    })
   }
 
   /**
@@ -87,14 +111,24 @@ class BasicModel {
     return new Promise((resolve, reject) => {
 
       let fields = this.fields;
-      delete fields.id;
 
-      db.insert(this.constructor.table(), fields)
-        .then((result) => {
-          this.id = result.insertId;
-          resolve(this);
-        })
-        .catch(reject);
+      if (fields.id) {
+
+        db.update(this.constructor.table(), fields, { 'id =': this.id })
+          .then((result) => {
+            resolve(this);
+          })
+          .catch(reject);
+      } else {
+
+        db.insert(this.constructor.table(), fields)
+          .then((result) => {
+            this.id = result.insertId;
+            resolve(this);
+          })
+          .catch(reject);
+      }
+
     });
   }
 
