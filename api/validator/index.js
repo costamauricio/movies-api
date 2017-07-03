@@ -20,7 +20,7 @@ module.exports = function(rules) {
           values = ctx.request.fields;
           break;
         case 'query':
-          values = ctx.query;
+          values = ctx.request.query;
           break;
         case 'params':
           values = ctx.params;
