@@ -24,6 +24,7 @@ module.exports = function(rules) {
           break;
         case 'params':
           values = ctx.params;
+          delete values['0'];
           break;
       }
 
