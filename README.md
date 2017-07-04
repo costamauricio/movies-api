@@ -13,6 +13,7 @@
 ## Executando via Docker
 
 * docker-compose up -d mysql
+* Aguardar o container inicializar e depois rodar os comandos abaixo
 * docker-compose exec mysql /bin/sh -c 'mysql -u root -proot < /dump/init.sql'
 * docker-compose up -d api
 * Api disponível em http://localhost:8081
