@@ -85,7 +85,9 @@ router.get('/:id', async (ctx) => {
   ctx.body = {
     id: ctx.movie.id,
     title: ctx.movie.title,
-    director: ctx.movie.director
+    director: ctx.movie.director,
+    copies: ctx.movie.copies,
+    avaiable_copies: await ctx.movie.getAvaiableCopies()
   };
 });
 
@@ -103,6 +105,9 @@ router.get('/:id/rental', async (ctx) => {
 
   if (rental)
     boom.badRequest(ctx, 'Movie already rented by the user');
+
+  if (await ctx.movie.getAvaiableCopies() == 0)
+    boom.badRequest(ctx, 'There are no avaiable copies to rent');
 
   try {
 

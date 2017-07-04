@@ -22,8 +22,29 @@ create table tokens(
 create table movies(
   id bigint auto_increment primary key,
   title varchar(255) not null,
-  director varchar(255) not null
+  director varchar(255) not null,
+  copies integer not null default 1
 );
+
+insert into movies(title, director, copies) values
+  ('Star Wars Episode IV - A New Hope', 'George Lucas', 2),
+  ('Star Wars Episode V - The Empire Strikes Back', 'Irvin Kershner', 1),
+  ('Star Wars Episode VI - Return of the Jedi', 'Richard Marquand', 3),
+  ('Star Wars Episode I - The Phantom Menace', 'George Lucas', 1),
+  ('Star Wars Episode II - Attack of the Clones', 'George Lucas', 2),
+  ('Star Wars Episode III - Revenge of the Sith', 'George Lucas', 1),
+  ('Star Wars Episode VII - The Force Awakens', 'J. J. Abrams', 10),
+  ('Rogue One: A Star Wars Story', 'Gareth Edwards', 5),
+  ('Star Trek: The Motion Picture', 'Robert Wise', 1),
+  ('Star Trek II: The Wrath of Khan', 'Nicholas Meyer', 1),
+  ('Star Trek III: The Search for Spock', 'Leonard Nimoy', 1),
+  ('Star Trek IV: The Voyage Home', 'Leonard Nimoy', 1),
+  ('Star Trek V: The Final Frontier', 'William Shatner', 1),
+  ('Star Trek VI: The Undiscovered Country', 'Nicholas Meyer', 1),
+  ('Star Trek Generations', 'David Carson', 1),
+  ('Star Trek: First Contact', 'Jonathan Frakes', 1),
+  ('Star Trek: Insurrection', 'Jonathan Frakes', 1),
+  ('Star Trek: Nemesis', 'Stuart Baird', 1);
 
 create table rentals(
   id bigint auto_increment primary key,
